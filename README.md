@@ -1,6 +1,6 @@
 # Power-Series.clj
 
->”Multiply the arc by the square of the arc, and take the result of repeating that (any number of times). >Divide (each of the above numerators) by the squares of the successive even numbers increased by that >number and multiplied by the square of the radius. Place the arc and the successive results so obtained >one below the other, and subtract each from the one above. These together give the jiva, as collected >together in the verse beginning with 'vidvan' etc." 
+>”Multiply the arc by the square of the arc, and take the result of repeating that (any number of times). Divide (each of the above numerators) by the squares of the successive even numbers increased by that number and multiplied by the square of the radius. Place the arc and the successive results so obtained one below the other, and subtract each from the one above. These together give the jiva, as collected together in the verse beginning with "vidvan" etc."
 
 -[Madhava of Sangamagrama](https://en.wikipedia.org/wiki/Madhava_of_Sangamagrama) (c. 1350 – c. 1425), founder of the Kerala school of astronomy and mathematics
 
