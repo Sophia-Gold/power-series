@@ -1,6 +1,6 @@
 BENCHMARKS
 
-Cosines
+COSINE
 
 power-series.core=> (bench (take 10 (cosine-series)))
 Evaluation count : 1229471220 in 60 samples of 20491187 calls.
