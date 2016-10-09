@@ -32,7 +32,7 @@ whereas in Clojure using the built-in function `repeat`:
 (def ones (repeat 1))
 ```
 
-Still, it seems when it comes to infinite convergent series recursion is simply the correct choice: *especially* considering we're almost always working with examples like trigonometry and the exponential function that can be defined in terms of one another. Clojure does have rich generative methods capable of defining sine and cosine independently, but the stubborn Schemer in me chose instead to spend a couple days learning the hairy idiosyncrasies of defining (often mutually) recursive functions to generate lazy sequences on the JVM.
+Still, it seems when it comes to infinite convergent series recursion is simply the correct choice: especially considering we're almost always working with examples like trigonometry and the exponential function that can be defined in terms of one another. Clojure does have rich generative methods capable of defining sine and cosine independently, but the stubborn Schemer in me chose instead to spend a couple days learning the hairy idiosyncrasies of defining (often mutually) recursive functions to generate lazy sequences on the JVM.
 ______________________________________
 
 The one thing I'd like to improve is adding a composition function using Faà di Bruno's formula. So far McIlroy's is the only version I've seen that includes one, but it seems lacking considering I already support the compositional inverse.	
