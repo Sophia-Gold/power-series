@@ -1,5 +1,3 @@
-BENCHMARKS
-
 COSINE
 
 power-series.core=> (bench (take 10 (cosine-series)))
