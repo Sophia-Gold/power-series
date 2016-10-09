@@ -1,6 +1,6 @@
-#Benchmarks
+BENCHMARKS
 
-##cosine
+Cosines
 
 power-series.core=> (bench (take 10 (cosine-series)))
 Evaluation count : 1229471220 in 60 samples of 20491187 calls.
@@ -39,7 +39,7 @@ Found 2 outliers in 60 samples (3.3333 %)
  Variance from outliers : 6.2611 % Variance is slightly inflated by outliers
  
 
-##exponential function
+EXPONENTIAL FUNCTION
 
 power-series.core=> (bench (take 10 (exp-series)))
 Evaluation count : 1141149840 in 60 samples of 19019164 calls.
@@ -75,7 +75,7 @@ Found 1 outliers in 60 samples (1.6667 %)
  Variance from outliers : 1.6389 % Variance is slightly inflated by outliers
 
 
-##inverse tangent
+INVERSE TANGENT
 
 power-series.core=> (bench (take 10 (arctan-series)))
 Evaluation count : 157278060 in 60 samples of 2621301 calls.
@@ -116,7 +116,7 @@ Found 1 outliers in 60 samples (1.6667 %)
  Variance from outliers : 1.6389 % Variance is slightly inflated by outliers
 
 
-#tangent
+TANGENT
 
 power-series.core=> (bench (take 10 (tangent-series)))
 Evaluation count : 104703600 in 60 samples of 1745060 calls.
@@ -151,7 +151,7 @@ Found 2 outliers in 60 samples (3.3333 %)
  Variance from outliers : 12.6067 % Variance is moderately inflated by outliers
 
 
-#π
+PI
 
 power-series.core=> (bench (pi 10))
 Evaluation count : 754320 in 60 samples of 12572 calls.
