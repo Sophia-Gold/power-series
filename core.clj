@@ -1,4 +1,5 @@
-(ns power-series.core)
+(ns power-series.core
+  (:use criterium.core))
 
 (def ones (repeat 1))
 (def ints (drop 1 (range)))
@@ -25,7 +26,7 @@
 (defn invert-series [s]
    (cons 1
         (lazy-seq (negate-series
-                   (mul-series (next s)
+                   (mul-series (rest s)
                                (invert-series s))))))
 
 (defn div-series [s1 s2]
@@ -34,18 +35,6 @@
     (scale-series (mul-series s1
                               (invert-series (scale-series s2 (/ 1 (first s2)))))
                   (/ 1 (first s2)))))
-
-(defn compose-series [f g]
-  (mul-series
-   (cons (first f)
-         g)
-   (compose-series
-    (rest f)
-    g)))
-
-;; (cons (cons (first f)
-;;             (mul-series 1 (rest f)))
-;;       (compose-series g))
            
 (defn differentiate-series [s]
   (map * s ints))
@@ -57,7 +46,7 @@
 
 ;; TESTS
 
-;; integrals tests
+;; INTEGRALS
 (declare cosine-series)
 (defn sine-series []
   (cons 0
@@ -71,7 +60,7 @@
           (negate-series
            (sine-series))))))
 
-;; derivatives test
+;; DERIVATIVES
 ;; (declare cosine-series)
 ;; (defn sine-series []
 ;;   (cons 1
@@ -92,21 +81,37 @@
          (mul-series (sine-series) (sine-series))
          (mul-series (cosine-series) (cosine-series)))))
 
-
-;; tangent series or Madhava-Leibniz series (1/4 Pi)
 (defn tangent-series []
-  (div-series (sine-series) (cosine-series)))
+  (div-series
+   (sine-series)
+   (cosine-series)))
 
+(defn arctan-series []
+  "Madhava-Leibniz series"
+  (defn arctan [n]
+    (lazy-seq
+     (cons (/ 1 n)
+           (map -
+                (arctan (+ n 2))))))
+  (arctan 1))
 
-;; exponential function
-;; (defn exp-series []
-;;   (cons 1
-;;         (lazy-seq
-;;          (integrate-series
-;;           (exp-series)))))
-(defn exp-series []
+(defn pi [precision]
+  (with-precision 1000
+    (* 4M
+       (reduce +
+               (take precision
+                     (arctan-series))))))
+
+;; EXPONENTIAL FUNCTION
+(defn exp-series []         ;integral
   (cons 1
         (lazy-seq
-         (differentiate-series
+         (integrate-series
           (exp-series)))))
-
+;; (defn exp-series []      ;derivative
+;;   (map / ones
+;;        ((fn exp []
+;;          (cons 1
+;;                (lazy-seq
+;;                 (differentiate-series
+;;                  (exp))))))))
