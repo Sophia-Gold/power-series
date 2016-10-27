@@ -46,7 +46,7 @@ ______________________________________
 + Division
 + Functional Composition
 + Functional Reversion
-+ Square Root
 + Differentiation
 + Integration
++ Square Root
 + Euler Transform (series acceleration)
