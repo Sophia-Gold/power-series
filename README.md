@@ -11,7 +11,7 @@ By all accounts, computing power series with lazy evaluation was fist mentioned 
 
 They perhaps became most well known through their implementations in Scheme included in [Structure and Interpretation of Computer Programs](https://mitpress.mit.edu/sicp/), although by now versions exist in numerous languages: even those without support for laziness such as Go.
 
-In 1989, long before Go, Doug McIlroy wrote a lazy concurrent version on one of its [CSP](https://docs.google.com/viewer?url=http%3A%2F%2Fwww.usingcsp.com%2Fcspbook.pdf) predecessors, Newsqueak, and published a paper: [Squinting at Power Series](https://swtch.com/~rsc/thread/squint.pdf). McIlroy referred to [the subsequent version in Haskell](http://www.cs.dartmouth.edu/~doug/powser.html) as, "the most beautiful code I've ever written," and went on to publish two more papers: [Functional Pearls: Power Series, Power Serious](http://www.cs.dartmouth.edu/~doug/pearl.ps.gz) and [The Music of Streams](http://www.cs.dartmouth.edu/~doug/music.ps.gz).
+In 1989, long before Go, Doug McIlroy wrote a lazy concurrent version on one of its [CSP](https://docs.google.com/viewer?url=http%3A%2F%2Fwww.usingcsp.com%2Fcspbook.pdf) predecessors, Newsqueak, and published a paper: ["Squinting at Power Series"](https://swtch.com/~rsc/thread/squint.pdf). McIlroy referred to [the subsequent version in Haskell](http://www.cs.dartmouth.edu/~doug/powser.html) as, "the most beautiful code I've ever written," and went on to publish two more papers: ["Functional Pearls: Power Series, Power Serious"](http://www.cs.dartmouth.edu/~doug/pearl.ps.gz) and ["The Music of Streams"](http://www.cs.dartmouth.edu/~doug/music.ps.gz).
 
 
 ##Implementation Details & Chrestomathy Analysis
