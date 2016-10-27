@@ -56,6 +56,12 @@
           (compose-series s
                           (reverse-series s))))))
 
+(defn differentiate-series [s]
+  (map * s ints))
+
+(defn integrate-series [s]
+  (map / s ints))
+
 (defn sqrt-series [s]
   (lazy-seq
    (cons 1
@@ -64,12 +70,6 @@
            (differentiate-series
             (scale-series
              (sqrt-series s) 2)))))))
-
-(defn differentiate-series [s]
-  (map * s ints))
-
-(defn integrate-series [s]
-  (map / s ints))
 
 (defn euler-transform [s]
   (let [s0 (nth s 0)           
