@@ -41,6 +41,7 @@ ______________________________________
 + Scaling
 + Negation
 + Coercion (finite to infinite series)
++ Functional Inversion
 + Multiplication 
 + Division
 + Functional Composition
