@@ -38,7 +38,6 @@ ______________________________________
 ##Current functions include:
 
 + Addition
-+ Subtraction
 + Scaling
 + Negation
 + Coercion (finite to infinite series)
