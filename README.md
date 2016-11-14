@@ -37,7 +37,9 @@ Still, it seems when it comes to infinite convergent series recursion is simply 
 
 ##Custom Typing
 
-This version makes use my own [Symbolic Algebra library](https://github.com/Sophia-Gold/Symbolic-Algebra.clj) to add custom numeric types for rational numbers in order to eliminate overflow in reduction and in the future polynomials for multivariate computation through polymorphic subtyping as well as the possibility of functions over complex variables. To run this version simply clone the Symbolic Library algebra and run ```lein install``` in that directory as well as ```lein deps``` in this one.
+This version makes use my own [Symbolic Algebra library](https://github.com/Sophia-Gold/Symbolic-Algebra.clj) to add custom numeric types for rational numbers in order to eliminate overflow in reduction and in the future polynomials for multivariate computation through polymorphic subtyping as well as the possibility of functions over complex variables.
+
+The Symbolic Algebra library used here is slightly different than that maintained in the public repo in that it makes use of dense rather than sparse term lists. The sparse version is included here in the checkouts subdirectory, but may be installed anywhere as long as a symlink is placed there. To run this version of the power-series program simply clone both libraries and run ```lein install``` in symbolic-algebra_sparse directory as well as ```lein deps``` in this one.
 ______________________________________	
 
 ##Current functions include:
