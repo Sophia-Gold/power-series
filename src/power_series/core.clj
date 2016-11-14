@@ -10,7 +10,9 @@
   (:use criterium.core))
 
 (def ones (repeat 1))
-(def ints (drop 1 (range)))
+(def ints (map
+           #(sym/->Rational % 1)
+           (drop 1 (range))))
 
 (defn add-series [s1 s2]
   (map sym/add s1 s2))
@@ -19,9 +21,8 @@
   (let [s2 (repeat x)]
     (map sym/mul s s2)))
 
-;maybe get rid of?
 (defn negate-series [s]
-  (scale-series s -1))
+  (scale-series s (sym/->Rational -1 1)))
 
 (defn coerce-series [s]
   (lazy-seq
@@ -45,8 +46,8 @@
   (if (zero? (first s2))
     (println "ERROR: denominator has a zero constant term")
     (scale-series (mul-series s1
-                              (invert-series (scale-series s2 (sym/->Rational 1 (first s2)))))
-                  (sym/->Rational 1 (first s2)))))
+                              (invert-series (scale-series s2 (sym/div 1 (first s2)))))
+                  (sym/div 1 (first s2)))))
 
 (defn compose-series [f g]
   (cons
@@ -56,7 +57,6 @@
                                          (cons 0
                                                (rest g)))))))
 
-;might be off?
 (defn reverse-series [s]
   (lazy-seq
    (cons 0
@@ -68,7 +68,7 @@
   (map sym/mul s ints))
 
 (defn integrate-series [s]
-  (map sym/->Rational s ints))
+  (map sym/div s ints))
           
 (defn sqrt-series [s]
   (lazy-seq
@@ -115,8 +115,8 @@
   "Madhava-Leibniz series"
   (defn arctan [n]
     (lazy-seq
-     (cons (sym/->Rational 1 n)
-           (map sym/sub
+     (cons (sym/div 1 n)
+           (map -
                 (arctan (sym/add n 2))))))
   (arctan 1))
 
@@ -170,6 +170,4 @@
 ;;   (dorun (print (repeatedly n #(<!! ch)))))
 
 (defn -main []
-  (println
-   (take 10
-         (sine-series))))
+  )
