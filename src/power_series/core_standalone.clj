@@ -20,8 +20,11 @@
 
 (defn coerce-series [s]
   (lazy-seq
-   (concat s
-         (repeat 0))))
+   (concat
+    (if (seq? s)
+      (reverse s)
+      s)
+    (repeat 0))))
 
 (defn mul-series [s1 s2] 
    (cons (* (first s1)
