@@ -11,3 +11,5 @@ pom.xml.asc
 .hg/
 git
 CHANGELOG.md
+/src/madhava/newton-raphson.clj
+/src/madhava/scratch.clj
