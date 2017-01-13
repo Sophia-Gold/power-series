@@ -33,10 +33,10 @@ Operations:
 + Scaling
 + Negation
 + Coercion (finite to infinite series)
-+ Multiplication 
++ Multiplication (Cauchy product)
 + Division
 + Functional Inversion
-+ Functional Composition
++ Functional Composition (Horner scheme)
 + Functional Reversion
 + Differentiation
 + Integration
