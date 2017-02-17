@@ -1,11 +1,13 @@
 (ns Madhava.core
-  (:use criterium.core))
+  (:require [criterium.core]))
 
 (defn custom-types-on []
-  (doto 'Madhava.core_types require in-ns))
+  (ns Madhava.core_types
+    (:require [Madhava.core_types])))
 
 (defn custom-types-off []
-  (doto 'Madhava.core require in-ns))
+  (ns Madhava.core
+    (:require [Madhava.core])))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
@@ -167,8 +169,8 @@
 
 (defn signum [s]
   (cond
-    (pos? (first s) ) (cons 1 (lazy-seq (signum (rest s))))
-    (neg? (first s)) (cons -1 (lazy-seq (signum (rest s))))
+    (pos? (first s))  (cons 1 (lazy-seq (signum (rest s))))
+    (neg? (first s))  (cons -1 (lazy-seq (signum (rest s))))
     (zero? (first s)) (cons 0 (lazy-seq (signum (rest s))))))
 
 (defn heaviside-step [s]

@@ -1,6 +1,6 @@
 (ns Madhava.core_types
-  (:require [symbolic-algebra.core :as sym])
-  (:use criterium.core))
+  (:require [symbolic-algebra.core :as sym]
+            [criterium.core]))
 
 (defn custom-types-on []
   (ns Madhava.core_types
@@ -25,7 +25,6 @@
 (defn scale-series [s x]
   (let [s2 (repeat x)]
     (map sym/mul s s2)))
-
 (defn negate-series [s]
   (scale-series s (sym/->Rational -1 1)))
 
@@ -80,28 +79,26 @@
 ;; CONVERGENT SERIES
 
 (defn exp-series []
-  (lazy-cat [1]
-           (integrate-series
-            (exp-series))))
+  (->> (exp-series)
+       (integrate-series)
+       (lazy-cat [1])))
 
 (defn exp-series' []
-  (lazy-cat [1]
-            (differentiate-series
-             (exp-series'))))
+  (->> (exp-series')
+       (differentiate-series)
+       (lazy-cat [1])))
 
 (declare cos-series)
 (defn sin-series []
-  (cons 0
-        (lazy-seq
-         (integrate-series
-          (cos-series)))))
+  (->> (cos-series)
+       (integrate-series)
+       (lazy-cat [0])))
 
 (defn cos-series []
-  (cons 1
-        (lazy-seq
-         (integrate-series
-          (negate-series
-           (sin-series))))))
+  (->> (sin-series)
+       (negate-series)
+       (integrate-series)
+       (lazy-cat [1])))
 
 (defn atan-series []
   (integrate-series
@@ -109,14 +106,14 @@
 
 (declare cosh-series)
 (defn sinh-series []
-  (lazy-cat [0]
-            (integrate-series
-             (cosh-series))))
+  (->> (cosh-series)
+       (integrate-series)
+       (lazy-cat [0])))
 
 (defn cosh-series []
-  (lazy-cat [1]
-            (integrate-series
-             (sinh-series))))
+  (->> (sinh-series)
+       (integrate-series)
+       (lazy-cat [1])))
 
 (defn ln-series []
   (integrate-series
@@ -148,13 +145,14 @@
                      (catalan)))))
 
 (defn partitions []
-  (defn p [n]
+  (letfn [(p [n]
+            (cons 1
+                  (lazy-seq
+                   (add-series (p (+ n 1))
+                               (concat
+                                (repeat (- n 1) 0) (p n))))))]
     (cons 1
-          (lazy-seq
-           (add-series (p (+ n 1))
-                       (concat (repeat (- n 1) 0) (p n))))))
-  (cons 1
-        (p 1)))
+          (p 1))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
