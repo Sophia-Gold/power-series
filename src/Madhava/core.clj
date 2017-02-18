@@ -1,5 +1,5 @@
 (ns Madhava.core
-  (:require [criterium.core]))
+  (:require [criterium.core :refer :all]))
 
 (defn custom-types-on []
   (ns Madhava.core_types
