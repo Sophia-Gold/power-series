@@ -70,6 +70,7 @@ Generating Functions:
 + Fibonacci Series
 + Catalan numbers
 + Partition Function
++ Rowland's Prime Generator
 
 Decimal Approximations (untyped only):
 

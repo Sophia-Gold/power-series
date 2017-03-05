@@ -223,6 +223,27 @@
     (cons 1
           (p 1))))
 
+
+;; Rowland's prime number generator
+(defn prime-gen []
+  (letfn [(gcd [n d]
+            (if (zero? d)
+              n
+              (recur d (mod n d))))
+          (primes [n]
+            (if (= n 1)
+              7 
+              (let [prime-1 (primes (- n 1))]
+                (+ prime-1
+                   (gcd n prime-1)))))
+          (prime-series [n]
+            (lazy-seq
+             (cons
+              (- (primes (+ n 1))
+                 (primes n))
+              (prime-series (+ n 1)))))]
+    (prime-series 1)))
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;; SUMMATIONS
