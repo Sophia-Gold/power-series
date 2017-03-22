@@ -6,7 +6,7 @@
 
 ---
 
-##History
+## History
 
 By all accounts, computing power series with lazy evaluation was fist mentioned in [an unpublished paper](https://docs.google.com/viewer?url=http%3A%2F%2Fpdos.csail.mit.edu%2F~rsc%2Fkahn77parallel.pdf) on coroutines by Giles Kahn and David MacQueen in 1977, even though it primarily examined the Sieve of Eratosthenes method for finding primes and only mentioned having developed a power series application in the conclusion along with one for Fourier transforms and various sorting algorithms. Regardless, the power series and primes sieve examples quickly spread throughout the functional programming world as canonical numerical demonstrations of [Peter Landin's concept of streams](http://fi.ort.edu.uy/innovaportal/file/20124/1/22-landin_correspondence-between-algol-60-and-churchs-lambda-notation.pdf).
 
@@ -18,13 +18,13 @@ The technique was developed significantly in Haskell by Jerzy Karczmarczuk, who 
 
 ---
 
-##Custom Typing
+## Custom Typing
 
 Madhava can be used in conjunction with my own [Symbolic Algebra library](https://github.com/Sophia-Gold/Symbolic-Algebra.clj) to add custom numeric types for rational and complex numbers as well as polynomials. To use this version first clone both libraries and run ```lein install``` in the symbolic-algebra directory as well as ```lein deps``` in this one. Symbolic types can then be toggled on and off with ```(custom-types-on)``` and ```(custom-types-off)```. Note some functions (listed below) cannot be used with symbolic types.
 
 ---
 
-##Current functions include:
+## Current functions include:
 
 Operations:
 
