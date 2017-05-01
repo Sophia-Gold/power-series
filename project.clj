@@ -1,4 +1,4 @@
-(defproject Madhava "0.5.0"
+(defproject Madhava "0.6.0"
   :description "stream processing library for differential equations"
   :license {:name "Eclipse Public License"
             :url "http://www.eclipse.org/legal/epl-v10.html"}

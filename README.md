@@ -50,6 +50,7 @@ In untyped version only:
 + Heaviside Step Function
 + Dirac Delta
 + Fourier Transform
++ Monte Carlo functions
 
 Taylor Series:
 
@@ -71,6 +72,7 @@ Generating Functions:
 + Catalan numbers
 + Partition Function
 + Rowland's Prime Generator
++ Dirichlet's theorem
 
 Decimal Approximations (untyped only):
 

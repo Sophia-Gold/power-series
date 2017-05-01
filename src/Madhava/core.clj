@@ -1,5 +1,6 @@
 (ns Madhava.core
-  (:require [criterium.core :refer :all]))
+  (:require [criterium.core :refer :all]
+            [MonteCarlo.core :refer :all]))
 
 (defn custom-types-on []
   (ns Madhava.core_types
@@ -243,6 +244,13 @@
                  (primes n))
               (prime-series (+ n 1)))))]
     (prime-series 1)))
+
+;; Dirichlet's theorem
+(defn dirichlet []
+  (lazy-cat [1]
+            (integrate-series
+             (mul-series (invert-series (ln-series))
+                         (differentiate-series (dirichlet))))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
