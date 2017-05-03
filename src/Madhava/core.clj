@@ -252,6 +252,25 @@
              (mul-series (invert-series (ln-series))
                          (differentiate-series (dirichlet))))))
 
+;; Feynman's algorithm for base two logarithms
+(defn bit-shift-double [x shifts]
+  (let [x-long (Double/doubleToRawLongBits x)]
+    (Double/longBitsToDouble
+     (bit-or (bit-and 1 x-long)
+             (bit-shift-left (+ (bit-and 0x7ff (bit-shift-right x-long 52))
+                                shifts)
+                             52)
+             (bit-and 0xfffffffffffff x-long)))))
+(defn log [x]
+  (letfn [(factor [r k]
+            (let [rs (+ r (bit-shift-double r k))
+                  lookup (Math/log (+ 1 (bit-shift-double 1 k)))]
+              (if (<= rs x)
+                (lazy-seq
+                 (cons (+ 1 k lookup)
+                       (factor rs (inc k)))))))]
+    (factor 1 0)))
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;; SUMMATIONS
