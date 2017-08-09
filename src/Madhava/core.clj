@@ -271,6 +271,13 @@
                        (factor rs (inc k)))))))]
     (factor 1 0)))
 
+;; Lambert W-Function
+(defn W []
+  (map #(* (Math/pow %1 (- %1 2)) (- %2 %3))
+       ints
+       (cosh-series)
+       (sinh-series)))
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;; SUMMATIONS
