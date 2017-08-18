@@ -1,6 +1,5 @@
 (ns Madhava.core_types
-  (:require [symbolic-algebra.core :as sym]
-            [criterium.core :refer :all]))
+  (:require [symbolic-algebra.core :as sym]))
 
 (defn custom-types-on []
   (ns Madhava.core_types

@@ -1,6 +1,5 @@
 (ns Madhava.core
-  (:require [criterium.core :refer :all]
-            [MonteCarlo.core :refer :all]))
+  (:require [MonteCarlo.core :refer :all]))
 
 (defn custom-types-on []
   (ns Madhava.core_types
@@ -280,7 +279,38 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+(defn summation [precision sigma]
+  (->> (range)
+       (map #(double (/ (inc %) precision)))
+       (map #((sigma precision) %))
+       (take precision)))
+
+(defn Weierstrass [precision]
+  (partial
+   (fn [b]
+     (fn [x]
+       (->> (range)
+            (map #(* (Math/pow (/ (inc (* 1.5 (Math/PI))) b) %)
+                     (Math/cos (* x
+                                  (Math/pow b %)
+                                (Math/PI)))))
+            (take precision)
+            (reduce + 0))))))
+
+(defn blancmange [precision]
+  (fn [x]
+    (->> (range)
+         (map #(let [n (Math/pow 2 %)
+                             nx (* n x)]
+                 (/ (Math/abs (- nx (Math/round nx)))
+                    n)))
+         (take precision)
+         (reduce + 0))))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
 ;; SUMMATIONS
+
 
 (defn pi [decimals iterations]
   (with-precision decimals

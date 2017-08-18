@@ -75,6 +75,8 @@ Generating Functions:
 + Dirichlet's theorem
 + [Feynman's method for logarithms](http://longnow.org/essays/richard-feynman-connection-machine/)
 + Lambert W-Function
++ Weierstrass function
++ Blancmange curve
 
 Decimal Approximations (untyped only):
 
