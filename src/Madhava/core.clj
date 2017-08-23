@@ -9,7 +9,11 @@
   (ns Madhava.core
     (:require [Madhava.core])))
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;                                                                                   ;;
+;; CORE FUNCTIONS                                                                    ;;
+;;                                                                                   ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (def ints (drop 1 (range)))
 
@@ -83,9 +87,11 @@
                           (differentiate-series s)
                           (scale-series (sqrt-series s) 2))))))
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-;; SERIES ACCELERATION
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;                                                                                   ;;
+;; SERIES ACCELERATION                                                               ;;
+;;                                                                                   ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (defn euler-transform [s]
   (let [s0 (nth s 0)           
@@ -104,9 +110,41 @@
   (map first
        (make-triangle s)))
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;                                                                                   ;;
+;; IMPULSE FUNCTIONS                                                                 ;;
+;;                                                                                   ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;; CONVERGENT SERIES
+(defn signum [s]
+  (cond
+    (pos? (first s))  (cons 1 (lazy-seq (signum (rest s))))
+    (neg? (first s))  (cons -1 (lazy-seq (signum (rest s))))
+    (zero? (first s)) (cons 0 (lazy-seq (signum (rest s))))))
+
+(defn heaviside-step [s]
+  (scale-series
+   (add-series (repeat 1)
+               (signum s))
+   (/ 1 2)))
+
+(defn dirac-delta [s]
+  (scale-series
+   (differentiate-series
+    (signum s))
+   (/ 1 2)))
+
+(defn fourier-transform [s]
+  (integrate-series
+   (mul-series
+    (invert-series (exp-series))
+    s)))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;                                                                                   ;;
+;; TAYLOR SERIES                                                                     ;;
+;;                                                                                   ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (defn exp-series []
   (->> (exp-series)
@@ -159,41 +197,15 @@
    (sinh-series)
    (cosh-series)))
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;                                                                                   ;;
+;; GENERATING FUNCTIONS                                                              ;;
+;;                                                                                   ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
 (defn ln-series []
   (integrate-series
    (cycle [1 -1])))
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-;; IMPULSE FUNCTIONS
-
-(defn signum [s]
-  (cond
-    (pos? (first s))  (cons 1 (lazy-seq (signum (rest s))))
-    (neg? (first s))  (cons -1 (lazy-seq (signum (rest s))))
-    (zero? (first s)) (cons 0 (lazy-seq (signum (rest s))))))
-
-(defn heaviside-step [s]
-  (scale-series
-   (add-series (repeat 1)
-               (signum s))
-   (/ 1 2)))
-
-(defn dirac-delta [s]
-  (scale-series
-   (differentiate-series
-    (signum s))
-   (/ 1 2)))
-
-(defn fourier-transform [s]
-  (integrate-series
-   (mul-series
-    (invert-series (exp-series))
-    s)))
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-;; GENERATING FUNCTIONS
 
 (defn powers [exponent]
   (pow-series ints exponent))
@@ -222,7 +234,6 @@
                                 (repeat (- n 1) 0) (p n))))))]
     (cons 1
           (p 1))))
-
 
 ;; Rowland's prime number generator
 (defn prime-gen []
@@ -277,7 +288,35 @@
        (cosh-series)
        (sinh-series)))
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;                                                                                   ;;
+;; PROBABILITY DENSITY FUNCTIONS                                                     ;;
+;;                                                                                   ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(defn Gaussian []
+  (map #(* (/ 1 (Math/sqrt (* 2 (Math/PI))))
+           (Math/exp (* -0.5 (* % %))))
+       (range)))
+
+(defn uniform [a b]
+  (map #(if (and (>= % a) (<= % b))
+                  (/ 1 (- b a))
+                  0)
+       (range)))
+
+(defn Poisson [k]
+  (map #(let [mean (/ % 2)]
+          (* (Math/exp (- mean))
+             (Math/pow mean k)
+             (nth (exp-series) k)))
+       (range)))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;                                                                                   ;;
+;; SUMMATIONS                                                                        ;;
+;;                                                                                   ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (defn summation [precision sigma]
   (->> (range)
@@ -307,11 +346,6 @@
          (take precision)
          (reduce + 0))))
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-;; SUMMATIONS
-
-
 (defn pi [decimals iterations]
   (with-precision decimals
     (* 4M
@@ -332,8 +366,6 @@
        (reduce +
                (take iterations
                      (zeta 2))))))
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (defn -main []
   )

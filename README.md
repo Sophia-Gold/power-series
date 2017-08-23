@@ -77,6 +77,9 @@ Generating Functions:
 + Lambert W-Function
 + Weierstrass function
 + Blancmange curve
++ Gaussian distribution
++ Uniform distribution
++ Poisson distribution
 
 Decimal Approximations (untyped only):
 
