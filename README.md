@@ -71,6 +71,7 @@ Generating Functions:
 + Fibonacci Series
 + Catalan numbers
 + Partition Function
++ Bell numbers
 + Rowland's Prime Generator
 + Dirichlet's theorem
 + [Feynman's method for logarithms](http://longnow.org/essays/richard-feynman-connection-machine/)

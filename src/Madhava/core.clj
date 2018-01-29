@@ -225,7 +225,9 @@
          (mul-series (catalan)
                      (catalan)))))
 
-(defn partitions []
+(defn partitions
+  "Partition function for positive integers."
+  []
   (letfn [(p [n]
             (cons 1
                   (lazy-seq
@@ -235,8 +237,21 @@
     (cons 1
           (p 1))))
 
-;; Rowland's prime number generator
-(defn prime-gen []
+(defn bell
+  "Bell numbers: partitions of a set containing n elements where n > 0."
+  [n]
+  (int
+   (Math/ceil
+    (/ (reduce +'
+               (map #(/ (Math/pow % n)
+                        (reduce *' (range 1 (inc %)))) ;; factorial
+                    (range (* 2 n))))
+       (Math/E)))))
+
+
+(defn prime-gen
+  "Rowland's prime number generator"
+  []
   (letfn [(gcd [n d]
             (if (zero? d)
               n
@@ -255,15 +270,20 @@
               (prime-series (+ n 1)))))]
     (prime-series 1)))
 
-;; Dirichlet's theorem
-(defn dirichlet []
+
+(defn dirichlet
+  "Dirichlet's theorem"
+  []
   (lazy-cat [1]
             (integrate-series
              (mul-series (invert-series (ln-series))
                          (differentiate-series (dirichlet))))))
 
-;; Feynman's algorithm for base two logarithms
-(defn bit-shift-double [x shifts]
+
+(defn bit-shift-double
+  "Feynman's algorithm for base two logarithms.
+  http://longnow.org/essays/richard-feynman-connection-machine/"
+  [x shifts]
   (let [x-long (Double/doubleToRawLongBits x)]
     (Double/longBitsToDouble
      (bit-or (bit-and 1 x-long)
@@ -271,6 +291,7 @@
                                 shifts)
                              52)
              (bit-and 0xfffffffffffff x-long)))))
+
 (defn log [x]
   (letfn [(factor [r k]
             (let [rs (+ r (bit-shift-double r k))
@@ -281,8 +302,9 @@
                        (factor rs (inc k)))))))]
     (factor 1 0)))
 
-;; Lambert W-Function
-(defn W []
+(defn W
+  "Lambert W-Function"
+  []
   (map #(* (Math/pow %1 (- %1 2)) (- %2 %3))
        ints
        (cosh-series)
