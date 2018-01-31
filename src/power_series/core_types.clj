@@ -1,13 +1,14 @@
-(ns Madhava.core_types
-  (:require [symbolic-algebra.core :as sym]))
+(ns power-series.core_types
+  (:require [symbolic-algebra.core :as sym])
+  (:refer-clojure :exclude [ints]))
 
 (defn custom-types-on []
-  (ns Madhava.core_types
-    (:require [Madhava.core_types])))
+  (ns power-series.core_types
+    (:require [power-series.core_types])))
 
 (defn custom-types-off []
-  (ns Madhava.core
-    (:require [Madhava.core])))
+  (ns power-series.core
+    (:require [power-series.core])))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 

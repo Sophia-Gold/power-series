@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?><project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <groupId>Madhava</groupId>
-  <artifactId>Madhava</artifactId>
+  <groupId>power-series</groupId>
+  <artifactId>power-series</artifactId>
   <packaging>jar</packaging>
-  <version>0.5.0</version>
-  <name>Madhava</name>
-  <description>stream processing library for differential equations</description>
+  <version>0.6.0</version>
+  <name>power-series</name>
+  <description>stream processing library for formal power series and generating functions</description>
   <licenses>
     <license>
       <name>Eclipse Public License</name>
@@ -13,9 +13,11 @@
     </license>
   </licenses>
   <scm>
-    <tag>cef2826a71772c26a17e4eb8ee2bc9782a5e0ecd
+    <connection>scm:git:git://github.com/Sophia-Gold/power-series.git</connection>
+    <developerConnection>scm:git:ssh://git@github.com/Sophia-Gold/power-series.git</developerConnection>
+    <tag>724b6c0f56d1a5bf7fec15ed971fd621bece556d
 </tag>
-    <url/>
+    <url>https://github.com/Sophia-Gold/power-series</url>
   </scm>
   <build>
     <sourceDirectory>src</sourceDirectory>
@@ -56,24 +58,28 @@
       </releases>
     </repository>
   </repositories>
-  <dependencyManagement>
-    <dependencies/>
-  </dependencyManagement>
   <dependencies>
     <dependency>
       <groupId>org.clojure</groupId>
       <artifactId>clojure</artifactId>
-      <version>1.9.0-alpha14</version>
+      <version>1.9.0</version>
     </dependency>
     <dependency>
       <groupId>symbolic-algebra</groupId>
       <artifactId>symbolic-algebra</artifactId>
-      <version>0.5.0</version>
+      <version>0.5.1</version>
+    </dependency>
+    <dependency>
+      <groupId>org.clojure</groupId>
+      <artifactId>tools.nrepl</artifactId>
+      <version>0.2.12</version>
+      <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>criterium</groupId>
       <artifactId>criterium</artifactId>
       <version>0.4.4</version>
+      <scope>test</scope>
     </dependency>
   </dependencies>
 </project>

@@ -1,3 +1,4 @@
+.gitignore
 /target
 /classes
 /checkouts
@@ -10,5 +11,5 @@ pom.xml.asc
 .hg/
 git
 CHANGELOG.md
-/src/madhava/newton-raphson.clj
-/src/madhava/scratch.clj
+/src/power_series/newton-raphson.clj
+/src/power_series/scratch.clj

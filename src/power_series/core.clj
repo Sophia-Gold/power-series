@@ -1,13 +1,13 @@
-(ns Madhava.core
-  (:require [MonteCarlo.core :refer :all]))
+(ns power-series.core
+  (:refer-clojure :exclude [ints]))
 
 (defn custom-types-on []
-  (ns Madhava.core_types
-    (:require [Madhava.core_types])))
+  (ns power-series.core_types
+    (:require [power-series.core_types])))
 
 (defn custom-types-off []
-  (ns Madhava.core
-    (:require [Madhava.core])))
+  (ns power-series.core
+    (:require [power-series.core])))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                                                                                   ;;
@@ -109,36 +109,6 @@
 (defn accelerate-series [s]
   (map first
        (make-triangle s)))
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;                                                                                   ;;
-;; IMPULSE FUNCTIONS                                                                 ;;
-;;                                                                                   ;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-(defn signum [s]
-  (cond
-    (pos? (first s))  (cons 1 (lazy-seq (signum (rest s))))
-    (neg? (first s))  (cons -1 (lazy-seq (signum (rest s))))
-    (zero? (first s)) (cons 0 (lazy-seq (signum (rest s))))))
-
-(defn heaviside-step [s]
-  (scale-series
-   (add-series (repeat 1)
-               (signum s))
-   (/ 1 2)))
-
-(defn dirac-delta [s]
-  (scale-series
-   (differentiate-series
-    (signum s))
-   (/ 1 2)))
-
-(defn fourier-transform [s]
-  (integrate-series
-   (mul-series
-    (invert-series (exp-series))
-    s)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                                                                                   ;;
@@ -388,6 +358,37 @@
        (reduce +
                (take iterations
                      (zeta 2))))))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;                                                                                   ;;
+;; IMPULSE FUNCTIONS                                                                 ;;
+;;                                                                                   ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(defn signum [s]
+  (cond
+    (pos? (first s))  (cons 1 (lazy-seq (signum (rest s))))
+    (neg? (first s))  (cons -1 (lazy-seq (signum (rest s))))
+    (zero? (first s)) (cons 0 (lazy-seq (signum (rest s))))))
+
+(defn heaviside-step [s]
+  (scale-series
+   (add-series (repeat 1)
+               (signum s))
+   (/ 1 2)))
+
+(defn dirac-delta [s]
+  (scale-series
+   (differentiate-series
+    (signum s))
+   (/ 1 2)))
+
+(defn fourier-transform [s]
+  (integrate-series
+   (mul-series
+    (invert-series (exp-series))
+    s)))
+
 
 (defn -main []
   )

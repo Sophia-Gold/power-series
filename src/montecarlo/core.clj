@@ -1,4 +1,4 @@
-(ns MonteCarlo.core)
+(ns montecarlo.core)
 
 (defn rand-pairs [low1 high1 low2 high2]
   (lazy-seq
