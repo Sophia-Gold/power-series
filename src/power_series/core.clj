@@ -74,18 +74,19 @@
                              (reverse-series s)))))
 
 (defn differentiate-series [s]
-  (map * s ints))
+  (map * (rest s) ints))
 
-(defn integrate-series [s]
-  (map / s ints))
+(defn integrate-series
+  ([s] (integrate-series s 0))
+  ([s constant]
+   (cons constant (map / s ints))))
 
 (defn sqrt-series [s]
-  (lazy-cat [1]
-            (add-series (repeat 1)
-                        (integrate-series
-                         (div-series
-                          (differentiate-series s)
-                          (scale-series (sqrt-series s) 2))))))
+  (-> (lazy-seq
+       (div-series
+        (differentiate-series s)
+        (scale-series (sqrt-series s) 2)))
+      (integrate-series 1)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                                                                                   ;;
@@ -94,8 +95,8 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (defn euler-transform [s]
-  (let [s0 (nth s 0)           
-        s1 (nth s 1)          
+  (let [s0 (nth s 0)
+        s1 (nth s 1)
         s2 (nth s 2)]
     (lazy-seq
      (cons
@@ -117,26 +118,22 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (defn exp-series []
-  (->> (exp-series)
-       (integrate-series)
-       (lazy-cat [1])))
+  (-> (lazy-seq (exp-series))
+      (integrate-series 1)))
 
 (defn exp-series' []
-  (->> (exp-series')
-       (differentiate-series)
-       (lazy-cat [1])))
+  (-> (lazy-seq (exp-series'))
+      (differentiate-series)
+      (lazy-cat [1])))
 
 (declare cos-series)
 (defn sin-series []
-  (->> (cos-series)
-       (integrate-series)
-       (lazy-cat [0])))
+  (integrate-series (cos-series)))
 
 (defn cos-series []
-  (->> (sin-series)
-       (negate-series)
-       (integrate-series)
-       (lazy-cat [1])))
+  (-> (sin-series)
+      (negate-series)
+      (integrate-series 1)))
 
 (defn atan-series []
   (integrate-series
@@ -153,9 +150,7 @@
 
 (declare cosh-series)
 (defn sinh-series []
-  (->> (cosh-series)
-       (integrate-series)
-       (lazy-cat [0])))
+  (integrate-series (cosh-series)))
 
 (defn cosh-series []
   (->> (sinh-series)
@@ -228,7 +223,7 @@
               (recur d (mod n d))))
           (primes [n]
             (if (= n 1)
-              7 
+              7
               (let [prime-1 (primes (- n 1))]
                 (+ prime-1
                    (gcd n prime-1)))))
